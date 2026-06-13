@@ -1,5 +1,15 @@
 package online.shop.binary.order;
 
-public class Orders {
+import online.shop.binary.base.BaseEntity;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "orders")
+public class Orders extends BaseEntity{
+	private String status;
+	
+	public String getStatus() {return status;}
+	public void setStatus(String status) {this.status = status;}
 
 }
