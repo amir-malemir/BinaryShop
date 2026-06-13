@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Orders extends BaseEntity{
+public class Order extends BaseEntity{
 	private String status;
 	
 	public String getStatus() {return status;}

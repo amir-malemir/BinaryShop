@@ -1,6 +1,8 @@
 package online.shop.binary.order;
 
 import online.shop.binary.base.BaseRepository;
+import org.springframework.stereotype.Repository;
 
-public class OrderRepository extends BaseRepository<Order> {
+@Repository
+public interface OrderRepository extends BaseRepository<Order> {
 }

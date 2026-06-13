@@ -5,4 +5,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService extends BaseService<User, UserRepository> {
+    
+    public User findByUsername(String username) {
+        return null;
+    }
 }
