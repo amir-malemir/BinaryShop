@@ -1,27 +1,20 @@
 package online.shop.binary.cart;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import online.shop.binary.base.BaseEntity;
+import online.shop.binary.users.User;
 
 @Entity
 @Table(name = "card")
 public class Cart extends BaseEntity {
 	
-	private String products;
-	private String numbers;
 	
-	public String getProducts() {
-		return products;
-	}
-	public void setProducts(String products) {
-		this.products = products;
-	}
-	public String getNumbers() {
-		return numbers;
-	}
-	public void setNumbers(String numbers) {
-		this.numbers = numbers;
-	}
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	
+	
 }
