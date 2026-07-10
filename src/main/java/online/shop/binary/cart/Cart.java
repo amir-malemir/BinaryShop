@@ -7,7 +7,7 @@ import online.shop.binary.base.BaseEntity;
 
 @Entity
 @Table(name = "card")
-public class Card extends BaseEntity {
+public class Cart extends BaseEntity {
 	
 	private String products;
 	private String numbers;

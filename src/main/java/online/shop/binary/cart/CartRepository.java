@@ -1,5 +1,5 @@
 package online.shop.binary.cart;
 
-public class CardService {
+public class CartRepository {
 
 }
