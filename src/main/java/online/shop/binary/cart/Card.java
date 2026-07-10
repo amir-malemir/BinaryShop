@@ -1,4 +1,4 @@
-package online.shop.binary.card;
+package online.shop.binary.cart;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
