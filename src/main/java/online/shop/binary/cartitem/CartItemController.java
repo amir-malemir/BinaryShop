@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import online.shop.binary.base.BaseController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/cart-item")
 public class CartItemController extends BaseController<CartItem, CartItemService>{
 
 }
