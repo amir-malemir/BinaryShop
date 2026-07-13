@@ -1,6 +1,8 @@
 package online.shop.binary.cart;
 
 import javax.transaction.Transactional;
+import online.shop.binary.warehouse.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,7 @@ public class CartService extends BaseService<Cart, CartRepository> {
 		for(CartItem item: cart.getItems()){
 			Warehouse warehouse = warehouseRepository.findByProductId(item.getProduct().getId()).orElseThrow(() -> new RuntimeException("warehouse not found"));
 			if(warehouse.getQuantity() < item.getQuantity()) {
-				throw new RuntimeException("Stock not found");
+				throw new RuntimeException("Stock not enough!");
 			}
 		}
-		
 	}
