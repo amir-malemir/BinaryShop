@@ -28,3 +28,5 @@ public class CartService extends BaseService<Cart, CartRepository> {
 			}
 		}
 	}
+	
+}
