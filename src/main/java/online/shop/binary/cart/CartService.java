@@ -19,7 +19,7 @@ public class CartService extends BaseService<Cart, CartRepository> {
 	private WarehouseRepository warehouseRepository;
 	
 	@Transactional
-	public void cartDetails(Long cartId) {
+	public void validateStock(Long cartId) {
 		Cart cart = repository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
 		for(CartItem item: cart.getItems()){
 			Warehouse warehouse = warehouseRepository.findByProductId(item.getProduct().getId()).orElseThrow(() -> new RuntimeException("warehouse not found"));
