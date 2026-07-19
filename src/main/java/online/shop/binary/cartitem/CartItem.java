@@ -2,6 +2,8 @@ package online.shop.binary.cartitem;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import online.shop.binary.base.BaseEntity;
 import online.shop.binary.cart.Cart;
 import online.shop.binary.products.Products;
@@ -11,6 +13,7 @@ import online.shop.binary.products.Products;
 @Table(name = "cart_item")
 public class CartItem extends BaseEntity {
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "cart_id", nullable = false)
 	private Cart cart;

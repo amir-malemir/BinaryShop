@@ -2,6 +2,8 @@ package online.shop.binary.cart;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -19,7 +21,7 @@ public class Cart extends BaseEntity {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-	
+	@JsonManagedReference
 	@OneToMany(
 		    mappedBy = "cart",
 		    cascade = CascadeType.ALL,
