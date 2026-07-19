@@ -26,7 +26,7 @@ public class OrderService extends BaseService<Order, OrderRepository> {
 	private CartService cartService;
 	
 	@Transactional
-	public Order checkout(Long cartId) {
+	public void checkout(Long cartId) {
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("cart not found"));
 		Order order = repository.findById(cartId).orElseThrow(() -> new RuntimeException("Order not found"));
 		
