@@ -8,11 +8,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+public enum OrderStatus{
+	PENDING,
+	PAID,
+	PROCESSING,
+	CANCELLED
+}
+
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
-	private String status;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private OrderStatus status = OrderStatus.PENDING;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
@@ -25,8 +34,8 @@ public class Order extends BaseEntity {
 	@JsonManagedReference
 	private List<OrderItem> items = new ArrayList<>();
 
-	public String getStatus() { return status; }
-	public void setStatus(String status) { this.status = status; }
+	public OrderStatus getStatus() { return status; }
+	public void setStatus(OrderStatus status) { this.status = status; }
 
 	public User getUser() { return user; }
 	public void setUser(User user) { this.user = user; }
