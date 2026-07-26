@@ -6,8 +6,12 @@ import java.util.Optional;
 
 public abstract class BaseService<T extends BaseEntity, R extends BaseRepository<T>> {
     
-    @Autowired
-    protected R repository;
+    
+    protected final R repository;
+    
+    protected BaseService(R repository) {
+		this.repository = repository;
+	}
     
     public List<T> findAll() {
         return repository.findAll();
