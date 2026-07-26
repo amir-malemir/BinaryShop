@@ -8,13 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum OrderStatus{
-	PENDING,
-	PAID,
-	PROCESSING,
-	CANCELLED
-}
-
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
