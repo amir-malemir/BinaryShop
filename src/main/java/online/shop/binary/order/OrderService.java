@@ -56,7 +56,7 @@ public class OrderService extends BaseService<Order, OrderRepository> {
 		
 		order.setUser(cart.getUser());
 		order.setOrderDate(LocalDateTime.now());
-		order.setStatus("confirmed");
+		order.setStatus(OrderStatus.PAID);
 		repository.save(order);
 	}
 }
