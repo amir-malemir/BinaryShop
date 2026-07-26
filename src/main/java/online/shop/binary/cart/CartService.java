@@ -15,8 +15,14 @@ import online.shop.binary.warehouse.WarehouseRepository;
 @Service
 public class CartService extends BaseService<Cart, CartRepository> {
 	
-	@Autowired
-	private WarehouseRepository warehouseRepository;
+
+	private final WarehouseRepository warehouseRepository;
+	
+	public CartService(CartRepository repository,
+			WarehouseRepository warehouseRepository) {
+		super(repository);
+		this.warehouseRepository = warehouseRepository;
+	}
 	
 	@Transactional
 	public void validateStock(Long cartId) {
