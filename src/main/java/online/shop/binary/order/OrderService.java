@@ -16,14 +16,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderService extends BaseService<Order, OrderRepository> {
 	
-	@Autowired
-	private WarehouseRepository warehouseRepository;
 	
-	@Autowired
-	private CartRepository cartRepository;
+	private final WarehouseRepository warehouseRepository;
 	
-	@Autowired
-	private CartService cartService;
+	private final CartRepository cartRepository;
+	
+	
+	private final CartService cartService;
+	
+	
+	public OrderService(OrderRepository repository, WarehouseRepository warehouseRepository,
+			CartRepository cartRepository, CartService cartService) {
+		super(repository);
+		this.warehouseRepository = warehouseRepository;
+		this.cartRepository = cartRepository;
+		this.cartService =  cartService;
+
+	}
 	
 	@Transactional
 	public void checkout(Long cartId) {
