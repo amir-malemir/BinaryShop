@@ -35,11 +35,21 @@ public class OrderService extends BaseService<Order, OrderRepository> {
 	}
 	
 	@Transactional
-	public void checkout(Long cartId) {
+	public void checkout(Long userId, Long cartId) {
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("cart not found"));
-		Order order = repository.findById(cartId).orElseThrow(() -> new RuntimeException("Order not found"));
+		// Order order = repository.findById(cartId).orElseThrow(() -> new RuntimeException("Order not found"));
+		
+		if(!cart.getUser().getId().equals(userId)) {
+			throw new RuntimeException("cart does not for this user!");
+		}
 		
 		cartService.validateStock(cartId);
+		
+		Order order = new Order();
+		order.setUser(cart.getUser());
+		order.setOrderDate(LocalDateTime.now());
+		order.setStatus(OrderStatus.PAID);
+		
 				
 		for(CartItem cartItem : cart.getItems()){
 			
