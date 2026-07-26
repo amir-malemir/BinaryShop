@@ -24,17 +24,6 @@ public class CartService extends BaseService<Cart, CartRepository> {
 		this.warehouseRepository = warehouseRepository;
 	}
 	
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private CartStatus status = CartStatus.ACTIVE;
-	
-	public CartStatus getStatus() {
-	    return status;
-	}
-
-	public void setStatus(CartStatus status) {
-	    this.status = status;
-	}
 	
 	@Transactional
 	public void validateStock(Long cartId) {

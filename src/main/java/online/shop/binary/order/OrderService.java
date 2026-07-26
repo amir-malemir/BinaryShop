@@ -68,5 +68,8 @@ public class OrderService extends BaseService<Order, OrderRepository> {
 		order.setOrderDate(LocalDateTime.now());
 		order.setStatus(OrderStatus.PAID);
 		repository.save(order);
+		
+		cart.setStatus(CartStatus.CHECKED_OUT);
+		cartRepository.save(cart);
 	}
 }
