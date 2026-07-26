@@ -1,5 +1,7 @@
 package online.shop.binary.cart;
 
-public class CartStatus {
-
+public enum CartStatus {
+	ACTIVE,
+    CHECKED_OUT,
+    CANCELLED
 }
