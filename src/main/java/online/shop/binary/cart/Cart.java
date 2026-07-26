@@ -16,6 +16,18 @@ import online.shop.binary.cartitem.CartItem;
 @Table(name = "cart")
 public class Cart extends BaseEntity {
 	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private CartStatus status = CartStatus.ACTIVE;
+	
+	public CartStatus getStatus() {
+	    return status;
+	}
+
+	public void setStatus(CartStatus status) {
+	    this.status = status;
+	}
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
