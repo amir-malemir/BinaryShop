@@ -14,6 +14,12 @@ public class Warehouse extends BaseEntity {
 
     @Column(nullable = false)
     private Integer quantity = 0;
+    
+    @Column(nullable = false)
+    private String city = "tehran";
+    
+    @Column(nullable = false)
+    private String province = "tehran";
 
     public Products getProduct() { return product; }
     public void setProduct(Products product) { this.product = product; }
