@@ -1,7 +1,9 @@
-package online.shop.binary.warehouse;
+package online.shop.binary.service;
 
-import online.shop.binary.base.BaseService;
 import org.springframework.stereotype.Service;
+
+import online.shop.binary.warehouse.Warehouse;
+import online.shop.binary.warehouse.WarehouseRepository;
 
 @Service
 public class WarehouseService extends BaseService<Warehouse, WarehouseRepository> {

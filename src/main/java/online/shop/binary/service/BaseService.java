@@ -1,7 +1,10 @@
-package online.shop.binary.base;
+package online.shop.binary.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import online.shop.binary.base.BaseEntity;
+import online.shop.binary.base.BaseRepository;
 
 public abstract class BaseService<T extends BaseEntity, R extends BaseRepository<T>> {
     

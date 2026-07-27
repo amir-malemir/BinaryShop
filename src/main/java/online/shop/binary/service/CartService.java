@@ -1,4 +1,4 @@
-package online.shop.binary.cart;
+package online.shop.binary.service;
 
 import javax.transaction.Transactional;
 import online.shop.binary.warehouse.*;
@@ -7,7 +7,8 @@ import online.shop.binary.warehouse.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import online.shop.binary.base.BaseService;
+import online.shop.binary.cart.Cart;
+import online.shop.binary.cart.CartRepository;
 import online.shop.binary.cartitem.CartItem;
 import online.shop.binary.warehouse.Warehouse;
 import online.shop.binary.warehouse.WarehouseRepository;

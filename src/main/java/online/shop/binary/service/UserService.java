@@ -1,7 +1,9 @@
-package online.shop.binary.users;
+package online.shop.binary.service;
 
-import online.shop.binary.base.BaseService;
 import org.springframework.stereotype.Service;
+
+import online.shop.binary.users.User;
+import online.shop.binary.users.UserRepository;
 
 @Service
 public class UserService extends BaseService<User, UserRepository> {
