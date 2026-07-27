@@ -1,76 +1,11 @@
 package online.shop.binary.service;
 
-
-import online.shop.binary.warehouse.*;
-import online.shop.binary.cart.*;
-import online.shop.binary.cartitem.CartItem;
 import online.shop.binary.order.Order;
-import online.shop.binary.order.OrderRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class OrderService extends BaseService<Order, OrderRepository> {
-	
-	
-	private final WarehouseRepository warehouseRepository;
-	
-	private final CartRepository cartRepository;
-	
-	
-	private final CartService cartService;
-	
-	
-	public OrderService(OrderRepository repository, WarehouseRepository warehouseRepository,
-			CartRepository cartRepository, CartService cartService) {
-		super(repository);
-		this.warehouseRepository = warehouseRepository;
-		this.cartRepository = cartRepository;
-		this.cartService =  cartService;
 
-	}
-	
-	@Transactional
-	public void checkout(Long userId, Long cartId) {
-		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("cart not found"));
-		// Order order = repository.findById(cartId).orElseThrow(() -> new RuntimeException("Order not found"));
-		
-		if(!cart.getUser().getId().equals(userId)) {
-			throw new RuntimeException("cart does not for this user!");
-		}
-		
-		cartService.validateStock(cartId);
-		
-		Order order = new Order();
-		order.setUser(cart.getUser());
-		order.setOrderDate(LocalDateTime.now());
-		order.setStatus(OrderStatus.PAID);
-		
-				
-		for(CartItem cartItem : cart.getItems()){
-			
-			Warehouse warehouse = warehouseRepository.findByProductId(cartItem.getProduct().getId()).orElseThrow(() -> new RuntimeException("Warehouse not found"));
-			OrderItem orderItem = new OrderItem();
-			orderItem.setOrder(order);
-			orderItem.setProduct(cartItem.getProduct());
-			orderItem.setQuantity(cartItem.getQuantity());
-			order.getItems().add(orderItem);
-			warehouse.setQuantity(warehouse.getQuantity() - cartItem.getQuantity());
-			warehouseRepository.save(warehouse);
-		
-		}
-		
-		order.setUser(cart.getUser());
-		order.setOrderDate(LocalDateTime.now());
-		order.setStatus(OrderStatus.PAID);
-		repository.save(order);
-		
-		cart.setStatus(CartStatus.CHECKED_OUT);
-		cartRepository.save(cart);
-	}
+public interface OrderService  extends BaseService<Order>{
+	void checkout(Long userId, Long cartId);
 }
+
