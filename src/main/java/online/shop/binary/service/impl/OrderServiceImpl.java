@@ -11,56 +11,67 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class OrderServiceImpl extends BaseServiceImpl<order, OrderRepository> implements OrderService{
-	
-	private final WarehouseRepository warehouseRepository;
-	private final CartRepository cartRepository;
-	private final CartService cartService;
-	
-	public OrderServiceImpl(OrderRepository repository, WarehouseRepository warehouseRepository, CartRepository cartRepository, CartService cartService){
-		super(repository);
-		this.warehouseRepository = warehouseRepository;
-		this.cartRepository = cartRepository;
-		this.cartService = cartService;
-		
-		
-		@Override
-		@Transactional
-	    public void checkout(Long userId, Long cartId) {
-	        Cart cart = cartRepository.findById(cartId)
-	                .orElseThrow(() -> new RuntimeException("Cart not found"));
+public class OrderServiceImpl extends BaseServiceImpl<Order, OrderRepository> implements OrderService {
 
-	        if (!cart.getUser().getId().equals(userId)) {
-	            throw new RuntimeException("Cart does not belong to this user!");
-	        }
+    private final WarehouseRepository warehouseRepository;
+    private final CartRepository cartRepository;
+    private final CartService cartService;
 
-	        cartService.validateStock(cartId);
+    public OrderServiceImpl(
+            OrderRepository repository,
+            WarehouseRepository warehouseRepository,
+            CartRepository cartRepository,
+            CartService cartService) {
 
-	        Order order = new Order();
-	        order.setUser(cart.getUser());
-	        order.setOrderDate(LocalDateTime.now());
-	        order.setStatus(OrderStatus.PAID);
+        super(repository);
+        this.warehouseRepository = warehouseRepository;
+        this.cartRepository = cartRepository;
+        this.cartService = cartService;
+    }
 
-	        for (CartItem cartItem : cart.getItems()) {
-	            Warehouse warehouse = warehouseRepository.findByProductId(cartItem.getProduct().getId())
-	                    .orElseThrow(() -> new RuntimeException("Warehouse not found for product: " + cartItem.getProduct().getId()));
+    @Override
+    @Transactional
+    public void checkout(Long userId, Long cartId) {
 
-	            OrderItem orderItem = new OrderItem();
-	            orderItem.setOrder(order);
-	            orderItem.setProduct(cartItem.getProduct());
-	            orderItem.setQuantity(cartItem.getQuantity());
-	            
-	            order.getItems().add(orderItem);
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
 
-	            warehouse.setQuantity(warehouse.getQuantity() - cartItem.getQuantity());
-	            warehouseRepository.save(warehouse);
-	        }
+        if (!cart.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Cart does not belong to this user!");
+        }
 
-	        repository.save(order);
+        cartService.validateStock(cartId);
 
-	        cart.setStatus(CartStatus.CHECKED_OUT);
-	        cartRepository.save(cart);
-	    }
-		
-	}
+        Order order = new Order();
+        order.setUser(cart.getUser());
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.PAID);
+
+        for (CartItem cartItem : cart.getItems()) {
+
+            Warehouse warehouse = warehouseRepository
+                    .findByProductId(cartItem.getProduct().getId())
+                    .orElseThrow(() -> new RuntimeException(
+                            "Warehouse not found for product: "
+                                    + cartItem.getProduct().getId()));
+
+            OrderItem orderItem = new OrderItem();
+
+            orderItem.setOrder(order);
+            orderItem.setProduct(cartItem.getProduct());
+            orderItem.setQuantity(cartItem.getQuantity());
+
+            order.getItems().add(orderItem);
+
+            warehouse.setQuantity(
+                    warehouse.getQuantity() - cartItem.getQuantity());
+
+            warehouseRepository.save(warehouse);
+        }
+
+        repository.save(order);
+
+        cart.setStatus(CartStatus.CHECKED_OUT);
+        cartRepository.save(cart);
+    }
 }

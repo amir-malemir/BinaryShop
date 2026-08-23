@@ -8,8 +8,7 @@ import online.shop.binary.base.BaseEntity;
 import online.shop.binary.base.BaseRepository;
 import online.shop.binary.service.BaseService;
 
-public abstract class BaseServiceImpl<T extends BaseEntity, R extends BaseRepository<T>> implements BaseService{
-    
+public abstract class BaseServiceImpl<T extends BaseEntity, R extends BaseRepository<T>> implements BaseService<T> {    
     
     protected final R repository;
     

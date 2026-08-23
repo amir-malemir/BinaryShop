@@ -7,9 +7,8 @@ import online.shop.binary.service.BaseService;
 
 import java.util.List;
 
-public abstract class BaseController<T extends BaseEntity, S extends BaseService<T, ?>> {
-    
-    @Autowired
+public abstract class BaseController<T extends BaseEntity, S extends BaseService<T>>{
+@Autowired
     protected S service;
     
     @GetMapping
