@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 public class OrderController extends BaseController<Order, OrderService> {
-	
-	@PostMapping("/checkout/{cartId}")
-    public void checkout(@PathVariable Long cartId) {
-        service.checkout(cartId);
+
+    @PostMapping("/checkout/{userId}/{cartId}")
+    public void checkout(
+            @PathVariable Long userId,
+            @PathVariable Long cartId) {
+
+        service.checkout(userId, cartId);
     }
 }

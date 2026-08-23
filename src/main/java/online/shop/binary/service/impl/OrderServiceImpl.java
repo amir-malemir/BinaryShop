@@ -1,17 +1,27 @@
 package online.shop.binary.service.impl;
 
-import online.shop.binary.cart.*;
-import online.shop.binary.cartitem.CartItem;
-import online.shop.binary.service.impl.BaseServiceImpl;
-import online.shop.binary.warehouse.*;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import online.shop.binary.cart.Cart;
+import online.shop.binary.cart.CartRepository;
+import online.shop.binary.cart.CartStatus;
+import online.shop.binary.cartitem.CartItem;
+import online.shop.binary.order.Order;
+import online.shop.binary.order.OrderItem;
+import online.shop.binary.order.OrderRepository;
+import online.shop.binary.order.OrderStatus;
+import online.shop.binary.service.CartService;
+import online.shop.binary.service.OrderService;
+import online.shop.binary.warehouse.Warehouse;
+import online.shop.binary.warehouse.WarehouseRepository;
 
 @Service
-public class OrderServiceImpl extends BaseServiceImpl<Order, OrderRepository> implements OrderService {
+public class OrderServiceImpl
+        extends BaseServiceImpl<Order, OrderRepository>
+        implements OrderService {
 
     private final WarehouseRepository warehouseRepository;
     private final CartRepository cartRepository;
@@ -43,6 +53,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, OrderRepository> im
         cartService.validateStock(cartId);
 
         Order order = new Order();
+
         order.setUser(cart.getUser());
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.PAID);
@@ -51,8 +62,9 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, OrderRepository> im
 
             Warehouse warehouse = warehouseRepository
                     .findByProductId(cartItem.getProduct().getId())
-                    .orElseThrow(() -> new RuntimeException(
-                            "Warehouse not found for product: "
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Warehouse not found for product: "
                                     + cartItem.getProduct().getId()));
 
             OrderItem orderItem = new OrderItem();
