@@ -12,8 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController extends BaseController<User, UserService> {
     
-    @GetMapping("/username/{username}")
-    public User findByUsername(@PathVariable String username) {
-        return service.findByUsername(username);
-    }
+	@PostMapping("/merge")
+	public ResponseEntity<UserResponseDto> merge(@RequestBody UserMergeDto dto) {
+	    User user = userService.saveOrUpdate(dto);
+	    return ResponseEntity.ok(userService.toResponseDto(user));
+	}
+
+	@DeleteMapping
+	public ResponseEntity<Void> delete(@RequestBody BaseDeleteDto<Long> deleteDto) {
+	    userService.deleteAllById(deleteDto.getIds());
+	    return ResponseEntity.noContent().build();
+	}
 }
